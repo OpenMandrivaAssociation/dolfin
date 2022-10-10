@@ -28,9 +28,9 @@ BuildRequires:  python3-devel
 BuildRequires:	pybind11-devel
 BuildRequires:  python3dist(numpy)
 BuildRequires:  python3dist(setuptools)
-BuildRequires:  python3dist(fenics-ffc) >= %{fenics_version}
-BuildRequires:  python3dist(fenics-ufl) >= %{fenics_version}
 BuildRequires:  python3dist(fenics-dijitso) >= %{fenics_version}
+BuildRequires:  python3dist(fenics-ufl) >= %{fenics_version}
+BuildRequires:  python3dist(fenics-ffc) >= %{fenics_version}
 
 #BuildRequires:	suitesparse-devel
 #BuildRequires:	scotch-devel
