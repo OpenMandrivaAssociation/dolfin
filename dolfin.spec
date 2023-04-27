@@ -14,7 +14,7 @@ Group:		Sciences/Mathematics
 URL:		https://fenicsproject.org
 Source0:	https://bitbucket.org/fenics-project/dolfin/downloads/dolfin-%{version}.tar.gz
 # (fedora)
-Patch0:	%{name}-2019.1.0-fix-pkgconfig.patch
+#Patch0:	%{name}-2019.1.0-fix-pkgconfig.patch
 Patch0:		https://src.fedoraproject.org/rpms/dolfin/raw/rawhide/f/0001-Add-missing-include-for-compatiblity-with-gcc-13.patch
 Patch1:		https://src.fedoraproject.org/rpms/dolfin/raw/rawhide/f/0001-pkgconfig-drop-irrelevant-part-from-Libs-and-Cflags.patch
 
