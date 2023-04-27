@@ -1,0 +1,32 @@
+From 5e7dc695bdbf57b5115f20f5302c8770f05094c6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Date: Sun, 30 Jan 2022 09:39:40 +0100
+Subject: [PATCH] pkgconfig: drop irrelevant part from Libs and Cflags
+
+Link flags that were used for dolfin itself, for example -flto or
+other similar items are not useful here: those lines should just
+specify the flag that injects this library into those programs, and
+any special preprocessor flags, no more. In particular flags like -DHAS_HDF5
+will either be irrelevant for projects using the library or might even
+confuse their build systems. Those flags should stay "private" to dolfin.
+
+The immediate problem this was causing is
+https://bugzilla.redhat.com/show_bug.cgi?id=2043092#c36
+where a linker flag inserting a section with additional information about the
+build is "leaked" into projects using the dolfin library.
+---
+ cmake/templates/dolfin.pc.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/templates/dolfin.pc.in b/cmake/templates/dolfin.pc.in
+index 3faf2c35bb..945918723f 100644
+--- a/cmake/templates/dolfin.pc.in
++++ b/cmake/templates/dolfin.pc.in
+@@ -13,5 +13,5 @@ Description: Dynamic Object-oriented Library for FINite element computation
+ Version: @DOLFIN_VERSION@
+ Requires: @PKG_REQUIRES@
+ Conflicts:
+-Libs: @PKG_LINKFLAGS@ -L${libdir} -ldolfin
+-Cflags: @PKG_CXXFLAGS@ -DDOLFIN_VERSION=\"@DOLFIN_VERSION@\" ${definitions} -I${includedir} @PKG_INCLUDES@
++Libs: -L${libdir} -ldolfin
++Cflags: -DDOLFIN_VERSION=\"@DOLFIN_VERSION@\" -I${includedir}

@@ -1,0 +1,33 @@
+From 8d1810d6cd7a5ac5ee944f39847a93a4635b6b15 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Date: Tue, 24 Jan 2023 10:45:21 +0100
+Subject: [PATCH] Add missing include for compatiblity with gcc-13
+
+Quoting Jakub Jelinek:
+> See
+> https://gcc.gnu.org/gcc-13/porting_to.html#header-dep-changes
+> Some libstdc++ headers included <cstdint> in older versions
+> as an implementation detail but no longer do.
+
+> Including stdint.h will introduce ::uint32_t type among others,
+> but not std::uint32_t, if you use the latter, you need to
+> include <cstdint>.
+---
+ dolfin/mesh/MeshConnectivity.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/dolfin/mesh/MeshConnectivity.h b/dolfin/mesh/MeshConnectivity.h
+index b9ec2a6114..5d11d7ab3c 100644
+--- a/dolfin/mesh/MeshConnectivity.h
++++ b/dolfin/mesh/MeshConnectivity.h
+@@ -21,6 +21,7 @@
+ #ifndef __MESH_CONNECTIVITY_H
+ #define __MESH_CONNECTIVITY_H
+ 
++#include <cstdint>
+ #include <vector>
+ #include <dolfin/log/log.h>
+ 
+-- 
+2.39.1
+
