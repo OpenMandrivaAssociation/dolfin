@@ -1,5 +1,5 @@
 %bcond_without	hdf5
-%bcond_with		openmpi
+%bcond_without	openmpi
 %bcond_without	petsc
 %bcond_without	scotch
 %bcond_with		trillions
@@ -30,6 +30,7 @@ BuildRequires:	hdf5-devel
 BuildRequires:	cmake(pybind11)
 BuildRequires:	cmake(sundials)
 BuildRequires:  pkgconfig(blas)
+BuildRequires:	pkgconfig(libxml-2.0)
 %if %{with openmpi}
 BuildRequires:  pkgconfig(ompi)
 %endif
@@ -49,6 +50,15 @@ BuildRequires:  python3dist(fenics-ffc)
 BuildRequires:	scotch-devel
 %endif
 BuildRequires:  suitesparse-devel
+
+#BuildRequires:	vtk-devel #libvtk6-dev
+
+#BuildRequires:	#slepc-dev
+#BuildRequires:	#python-petsc4py
+#BuildRequires:	#python-slepc4py
+#BuildRequires:	python3egg(ply)
+#BuildRequires:	swig #swig3.0 (>= 3.0.3)
+
 
 %description
 DOLFIN is the computational backend of FEniCS and implements the FEniCS
@@ -149,6 +159,15 @@ export LDFLAGS="%ldflags -L%{_libdir}/openmpi/lib -lpython%{python3_version}"
 export CFLAGS="%{optflags} -Wno-unused-variable -DH5_USE_110_API"
 export CXXFLAGS="%{optflags} -DH5_USE_110_API"
 
+# -- The following OPTIONAL packages have not been found:
+#
+#  * PETSc (required version >= 3.7), Portable, Extensible Toolkit for Scientific Computation, <https://www.mcs.anl.gov/petsc/>
+#    Enables the PETSc linear algebra backend
+#  * SUNDIALS (required version >= 3), SUite of Nonlinear and DIfferential/ALgebraic Equation Solvers, <http://computation.llnl.gov/projects/sundials>
+#    Provides robust time integrators and nonlinear solvers that can easily be incorporated into existing simulation codes.
+#  * SCOTCH, Programs and libraries for graph, mesh and hypergraph partitioning, <https://www.labri.fr/perso/pelegrin/scotch>
+#    Enables parallel graph partitioning
+
 %cmake -Wno-dev \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
 	-DCMAKE_SKIP_RPATH:BOOL=ON \
@@ -162,8 +181,7 @@ export CXXFLAGS="%{optflags} -DH5_USE_110_API"
 	-G Ninja
 %ninja_build
 
-# python
-#  "temporary install" so the python build can find the stuff it needs
+# "temporary install" so the python build can find the stuff it needs
 %ninja_install
 
 pushd ../python
