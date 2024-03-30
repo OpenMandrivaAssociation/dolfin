@@ -8,7 +8,7 @@
 Summary:	A computational backend of FEniCS and implementation of the FEniCS Problem Solving Environment
 Name:		dolfin
 Version:	2019.1.0.post0
-Release:	5
+Release:	6
 License:	LGPLv3+
 Group:		Sciences/Mathematics
 URL:		https://fenicsproject.org
